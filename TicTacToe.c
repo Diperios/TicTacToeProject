@@ -97,8 +97,7 @@ bool game_tie(){
 }
 
 
-int main()
-{
+char one_game(){
     
     char won = 'N';
     
@@ -128,12 +127,125 @@ int main()
         won = who_won();
     }
     
-    if(won == 'N'){
-        printf("its a tie!");
-        return 0;
+    return won;
+}
+
+void enter_to_continue(){
+    int enter = 0;
+    printf("Press enter 1 to continue...");
+    enter = scanf("%d", &enter);
+}
+
+void clear_board(){
+    for(int i = 0; i < 9; i++){
+        board[i] = 'N';
     }
+}
+
+
+int casual_game(){
+    int num_of_games = 3;
+    printf("the winner is the best player out of %d games!\n", num_of_games);
+
+    enter_to_continue();
     
-    printf("%c won! congratulations!", won);
+    int x_wins = 0, o_wins = 0;
+
+    int i;
+    char won;
+
+    for(i = 0; i < num_of_games; i++){
+        printf("\nGame %d\n", i + 1);
+        won = one_game();
+        if(won == 'X'){
+            x_wins++;
+            printf("\n\n");
+            printf("X won! congratulations!\n\n");
+            printf("====================================\n\n");
+            printf("The score is %d - for X and %d - for O\n", x_wins, o_wins);
+            printf("====================================\n");
+            printf("\n\n");
+        }
+        else if(won == 'O'){
+            o_wins++;
+            printf("\n\n");
+            printf("O won! congratulations!\n");
+            printf("====================================\n");
+            printf("The score is %d - for X and %d - for O\n", x_wins, o_wins);
+            printf("====================================\n");
+            printf("\n\n");
+        }
+        else{
+            printf("its a tie!\n");
+            printf("game %d will be played again!\n", i + 1);
+            
+            i--;
+        }
+        clear_board();
+        enter_to_continue();
+    }
+
+    printf("\n\n\n\n\n\n");
+    printf("The score is %d - for X and %d - for O\n", x_wins, o_wins);
+    printf("\n\n");
+
+    printf("====================================\n");
+    
+    if(x_wins > o_wins){
+        printf("X won the game!\n");
+    }
+    else if(x_wins < o_wins){
+        printf("O won the game!\n");
+    }
+    else{
+        printf("The game is a tie!\n");
+    }
+
+    printf("====================================\n");
+
+    return 0;
+
+}
+
+
+int main()
+{
+    int game_type = 0;
+    //int num_of_games = 0;
+
+    printf("Welcome to Tic Tac Toe!\n\n");
+    printf("btw game mode 2 does not work on the phone and i dont have koahh to fix it\n enter 1\n\n\n");
+    printf("Enter 1 if you want to play for fun, or\n");
+    printf("Enter 2 if you want to play competitively >> ");
+    scanf("%d", &game_type);
+    printf("\n");
+
+    switch (game_type) {
+        case 1:
+            printf("You have chosen to play for fun!\n");
+            return casual_game();
+            break;
+        case 2:
+
+            printf("You have chosen to play competitively!\n");
+            printf("This does not work right now\n");
+            printf("I will fix it later\n");
+        
+            break;
+        default:
+            printf("Invalid input, please try again!\n");
+            return 0;
+    }
+
+
+    // char won = one_game();
+    
+    // if(won == 'N'){
+    //     printf("its a tie!");
+    //     return 0;
+    // }
+    
+    // printf("%c won! congratulations!", won);
 
     return 0;
 }
